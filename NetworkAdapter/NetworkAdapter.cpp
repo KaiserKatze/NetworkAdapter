@@ -64,18 +64,18 @@ int GetAdaptersInfo()
     if ((dwRetVal = GetAdaptersInfo(pAdapterInfo, &ulOutBufLen)) == NO_ERROR) {
         pAdapter = pAdapterInfo;
         while (pAdapter) {
-            printf("\tComboIndex: \t%d\n", pAdapter->ComboIndex);
-            printf("\tAdapter Name: \t%s\n", pAdapter->AdapterName);
-            printf("\tAdapter Desc: \t%s\n", pAdapter->Description);
-            printf("\tAdapter Addr: \t");
+            printf("ComboIndex: %d\n", pAdapter->ComboIndex);
+            printf("Adapter Name: %s\n", pAdapter->AdapterName);
+            printf("Adapter Desc: %s\n", pAdapter->Description);
+            printf("Adapter Addr: ");
             for (i = 0; i < pAdapter->AddressLength; i++) {
                 if (i == (pAdapter->AddressLength - 1))
                     printf("%.2X\n", (int)pAdapter->Address[i]);
                 else
                     printf("%.2X-", (int)pAdapter->Address[i]);
             }
-            printf("\tIndex: \t%d\n", pAdapter->Index);
-            printf("\tType: \t");
+            printf("Index: %d\n", pAdapter->Index);
+            printf("Type: ");
             switch (pAdapter->Type) {
             case MIB_IF_TYPE_OTHER:
                 printf("Other\n");
@@ -103,19 +103,19 @@ int GetAdaptersInfo()
                 break;
             }
 
-            printf("\tIP Address: \t%s\n",
+            printf("IP Address: %s\n",
                 pAdapter->IpAddressList.IpAddress.String);
-            printf("\tIP Mask: \t%s\n", pAdapter->IpAddressList.IpMask.String);
+            printf("IP Mask: %s\n", pAdapter->IpAddressList.IpMask.String);
 
-            printf("\tGateway: \t%s\n", pAdapter->GatewayList.IpAddress.String);
-            printf("\t***\n");
+            printf("Gateway: %s\n", pAdapter->GatewayList.IpAddress.String);
+            printf("***\n");
 
             if (pAdapter->DhcpEnabled) {
-                printf("\tDHCP Enabled: Yes\n");
-                printf("\t  DHCP Server: \t%s\n",
+                printf("DHCP Enabled: Yes\n");
+                printf("  DHCP Server: %s\n",
                     pAdapter->DhcpServer.IpAddress.String);
 
-                printf("\t  Lease Obtained: ");
+                printf("  Lease Obtained: ");
                 /* Display local time */
                 error = _localtime32_s(&newtime, (__time32_t*)&pAdapter->LeaseObtained);
                 if (error)
@@ -130,7 +130,7 @@ int GetAdaptersInfo()
                         printf("%s", buffer);
                 }
 
-                printf("\t  Lease Expires:  ");
+                printf("  Lease Expires:  ");
                 error = _localtime32_s(&newtime, (__time32_t*)&pAdapter->LeaseExpires);
                 if (error)
                     printf("Invalid Argument to _localtime32_s\n");
@@ -145,17 +145,17 @@ int GetAdaptersInfo()
                 }
             }
             else
-                printf("\tDHCP Enabled: No\n");
+                printf("DHCP Enabled: No\n");
 
             if (pAdapter->HaveWins) {
-                printf("\tHave Wins: Yes\n");
-                printf("\t  Primary Wins Server:    %s\n",
+                printf("Have Wins: Yes\n");
+                printf("  Primary Wins Server:    %s\n",
                     pAdapter->PrimaryWinsServer.IpAddress.String);
-                printf("\t  Secondary Wins Server:  %s\n",
+                printf("  Secondary Wins Server:  %s\n",
                     pAdapter->SecondaryWinsServer.IpAddress.String);
             }
             else
-                printf("\tHave Wins: No\n");
+                printf("Have Wins: No\n");
             pAdapter = pAdapter->Next;
             printf("\n");
         }
